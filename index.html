@@ -43,10 +43,14 @@
             height: 100%;
             background-image: 
                 radial-gradient(var(--secondary-color) 1px, transparent 1px),
-                radial-gradient(var(--secondary-color) 1px, transparent 1px);
-            background-size: 50px 50px;
-            background-position: 0 0, 25px 25px;
-            opacity: 0.05;
+                radial-gradient(var(--secondary-color) 1px, transparent 1px),
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(138, 109, 59, 0.03) 10px, rgba(138, 109, 59, 0.03) 20px),
+                repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(212, 167, 106, 0.03) 10px, rgba(212, 167, 106, 0.03) 20px),
+                repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(138, 109, 59, 0.02) 20px, rgba(138, 109, 59, 0.02) 21px),
+                repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(212, 167, 106, 0.02) 20px, rgba(212, 167, 106, 0.02) 21px);
+            background-size: 50px 50px, 50px 50px, 40px 40px, 40px 40px, 20px 20px, 20px 20px;
+            background-position: 0 0, 25px 25px, 0 0, 0 0, 0 0, 0 0;
+            opacity: 0.1;
             z-index: -1;
         }
 
@@ -58,6 +62,19 @@
             padding: 20px;
             background-color: rgba(245, 240, 230, 0.95);
             position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            animation: containerSlideIn 1s ease-out;
+        }
+
+        @keyframes containerSlideIn {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         /* 首页样式 */
@@ -67,16 +84,119 @@
             align-items: center;
             justify-content: center;
             min-height: 80vh;
+            position: relative;
+            z-index: 1;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(138, 109, 59, 0.05) 10px, rgba(138, 109, 59, 0.05) 20px),
+                repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(212, 167, 106, 0.05) 10px, rgba(212, 167, 106, 0.05) 20px);
+            background-size: 40px 40px, 40px 40px;
+            background-position: 0 0, 0 0;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border: 2px solid var(--border-color);
+        }
+
+        .home-page::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+            border-radius: 15px 15px 0 0;
+        }
+
+        .home-page::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+            border-radius: 0 0 15px 15px;
         }
 
         .title {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: bold;
             color: var(--primary-color);
-            margin-bottom: 60px;
+            margin-bottom: 40px;
             text-align: center;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            letter-spacing: 5px;
+            letter-spacing: 8px;
+            animation: titlePulse 2s ease-in-out infinite alternate;
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .title::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        }
+
+        .title::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        }
+
+        @keyframes titlePulse {
+            from {
+                transform: scale(1);
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            }
+            to {
+                transform: scale(1.05);
+                text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            }
+        }
+
+        /* 装饰元素 */
+        .decorative-element {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .decorative-element.top-left {
+            top: 20px;
+            left: 20px;
+            background: radial-gradient(circle, var(--primary-color), transparent);
+        }
+
+        .decorative-element.top-right {
+            top: 20px;
+            right: 20px;
+            background: radial-gradient(circle, var(--secondary-color), transparent);
+        }
+
+        .decorative-element.bottom-left {
+            bottom: 20px;
+            left: 20px;
+            background: radial-gradient(circle, var(--secondary-color), transparent);
+        }
+
+        .decorative-element.bottom-right {
+            bottom: 20px;
+            right: 20px;
+            background: radial-gradient(circle, var(--primary-color), transparent);
         }
 
         /* 按钮样式 */
@@ -91,17 +211,36 @@
             transition: all 0.3s ease;
             font-family: inherit;
             margin: 10px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn:hover {
             background-color: var(--highlight-color);
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }
 
         /* 角色选择页面 */
         .character-page {
             display: none;
+            animation: fadeIn 0.8s ease-out;
         }
 
         .character-title {
@@ -109,6 +248,28 @@
             color: var(--primary-color);
             margin-bottom: 30px;
             text-align: center;
+            position: relative;
+        }
+
+        .character-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background-color: var(--primary-color);
+            animation: titleLineGrow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleLineGrow {
+            from {
+                width: 80px;
+            }
+            to {
+                width: 120px;
+            }
         }
 
         .character-grid {
@@ -127,17 +288,36 @@
             transition: all 0.3s ease;
             border: 2px solid var(--border-color);
             position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .character-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .character-card:hover:not(.locked)::before {
+            transform: scaleX(1);
         }
 
         .character-card:hover:not(.locked) {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
             border-color: var(--primary-color);
         }
 
         .character-card.locked {
             opacity: 0.5;
             cursor: not-allowed;
+            position: relative;
         }
 
         .character-card.locked::after {
@@ -146,6 +326,16 @@
             top: 10px;
             right: 10px;
             font-size: 1.5rem;
+            animation: lockPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes lockPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
         }
 
         .character-name {
@@ -158,6 +348,7 @@
         /* 故事页面 */
         .story-page {
             display: none;
+            animation: fadeIn 0.8s ease-out;
         }
 
         /* 底部信息栏 */
@@ -176,6 +367,13 @@
             border: 1px solid var(--border-color);
             margin-bottom: 15px;
             text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .year-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         .bond-info {
@@ -183,6 +381,7 @@
             background-color: var(--paper-color);
             border-radius: 8px;
             border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .bond-title {
@@ -190,6 +389,19 @@
             font-weight: bold;
             color: var(--primary-color);
             margin-bottom: 8px;
+            text-align: center;
+            position: relative;
+        }
+
+        .bond-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 1px;
+            background-color: var(--primary-color);
         }
 
         .bond-item {
@@ -200,6 +412,13 @@
             background-color: rgba(255, 249, 230, 0.5);
             border-radius: 6px;
             border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .bond-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-color: var(--primary-color);
         }
 
         .bond-header {
@@ -237,12 +456,34 @@
             overflow: hidden;
             margin-right: 8px;
             position: relative;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .affinity-fill {
             height: 100%;
-            transition: width 0.5s ease, background-color 0.5s ease;
+            transition: width 0.8s ease-out, background-color 0.5s ease;
             border-radius: 4px;
+            position: relative;
+        }
+
+        .affinity-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: affinityShine 2s ease-in-out infinite;
+        }
+
+        @keyframes affinityShine {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
         }
 
         .affinity-fill.positive {
@@ -272,22 +513,64 @@
             font-size: 1.2rem;
             font-weight: bold;
             color: var(--primary-color);
+            animation: slideInLeft 0.5s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         .jump-btn {
-            padding: 5px 15px;
+            padding: 8px 16px;
             background-color: var(--secondary-color);
             color: var(--text-color);
             border: none;
-            border-radius: 3px;
+            border-radius: 5px;
             font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            animation: slideInRight 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .jump-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .jump-btn:hover::before {
+            left: 100%;
         }
 
         .jump-btn:hover {
             background-color: var(--highlight-color);
             color: #fff;
+            transform: scale(1.05);
         }
 
         /* 进度条 */
@@ -298,13 +581,35 @@
             border-radius: 4px;
             margin-bottom: 20px;
             overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .progress-bar {
             height: 100%;
             background-color: var(--primary-color);
             width: 0%;
-            transition: width 0.5s ease;
+            transition: width 1s ease-out;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: progressShine 2s ease-in-out infinite;
+        }
+
+        @keyframes progressShine {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
         }
 
         /* 对话框 */
@@ -320,6 +625,17 @@
             position: relative;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
+        }
+
+        .dialogue-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--primary-color));
         }
 
         .dialogue-text {
@@ -327,13 +643,28 @@
             line-height: 1.8;
             color: var(--text-color);
             flex: 1;
-            overflow: hidden;
+            overflow-y: auto;
             word-wrap: break-word;
+            position: relative;
+            max-height: 400px;
+            padding-right: 10px;
         }
 
         .dialogue-text p {
             text-indent: 2em;
             margin: 0 0 1em 0;
+            animation: textFadeIn 0.8s ease-out;
+        }
+
+        @keyframes textFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .dialogue-text p:first-child {
@@ -342,12 +673,49 @@
 
         .dialogue-buttons {
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
+            align-items: center;
             gap: 10px;
             margin-top: auto;
             padding-top: 15px;
-            flex-wrap: wrap;
-            min-height: 50px;
+            padding-bottom: 5px;
+            min-height: 60px;
+        }
+
+        .home-btn {
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            background-color: var(--paper-color);
+            color: var(--text-color);
+            display: inline-block;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .home-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .home-btn:hover::before {
+            left: 100%;
+        }
+
+        .home-btn:hover {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            transform: scale(1.05);
         }
 
         .prev-btn, .prev-chapter-btn, .continue-btn {
@@ -359,6 +727,8 @@
             border: 1px solid var(--border-color);
             display: inline-block;
             white-space: nowrap;
+            position: relative;
+            overflow: hidden;
         }
 
         .prev-btn {
@@ -368,6 +738,7 @@
 
         .prev-btn:hover {
             background-color: var(--light-bg);
+            transform: translateX(-3px);
         }
 
         .prev-chapter-btn {
@@ -378,6 +749,7 @@
         .prev-chapter-btn:hover {
             background-color: var(--secondary-color);
             color: var(--text-color);
+            transform: translateX(-3px);
         }
 
         .continue-btn {
@@ -387,9 +759,26 @@
             visibility: visible !important;
         }
 
+        .continue-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .continue-btn:hover::before {
+            left: 100%;
+        }
+
         .continue-btn:hover {
             background-color: var(--highlight-color);
             border-color: var(--highlight-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
         /* 任务面板 */
@@ -399,6 +788,19 @@
             border-radius: 10px;
             margin-bottom: 20px;
             border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .task-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--secondary-color);
+            border-radius: 10px 0 0 10px;
         }
 
         .task-title {
@@ -414,7 +816,7 @@
             line-height: 1.6;
         }
 
-        /* 跳转章节模态框 */
+        /* 模态框 */
         .modal {
             display: none;
             position: fixed;
@@ -426,6 +828,13 @@
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
         }
 
         .modal-content {
@@ -435,6 +844,47 @@
             width: 80%;
             max-width: 400px;
             text-align: center;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            border: 2px solid var(--primary-color);
+            transform: translateY(-50px) scale(0.9);
+            opacity: 0;
+            transition: all 0.3s ease-out;
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        /* 经历卡片动画 */
+        .experience-card {
+            animation: cardFadeIn 0.5s ease-out;
+        }
+
+        @keyframes cardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 场景内容动画 */
+        .scene-content {
+            animation: contentFadeIn 0.5s ease-out;
+        }
+
+        @keyframes contentFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .modal-title {
@@ -452,16 +902,36 @@
 
         .chapter-item {
             padding: 10px;
-            background-color: var(--background-color);
+            background-color: var(--light-bg);
             border: 1px solid var(--border-color);
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .chapter-item:hover::before {
+            transform: translateX(100%);
         }
 
         .chapter-item:hover {
             background-color: var(--secondary-color);
             color: #fff;
+            transform: scale(1.05);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .close-btn {
@@ -473,11 +943,127 @@
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .close-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .close-btn:hover::before {
+            left: 100%;
         }
 
         .close-btn:hover {
             background-color: var(--light-text);
             color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* 模态框头部 */
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .close-experience, .close-scene {
+            font-size: 1.5rem;
+            padding: 5px 10px;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-experience:hover, .close-scene:hover {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        /* 经历卡片模态框 */
+        .experience-modal {
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .experience-content {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .experience-card {
+            background-color: var(--paper-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .experience-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-color: var(--primary-color);
+        }
+
+        .experience-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .experience-card p {
+            color: var(--text-color);
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .experience-chapter {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+
+        /* 详细场景模态框 */
+        .scene-modal {
+            width: 90%;
+            max-width: 550px;
+        }
+
+        .scene-content {
+            max-height: 70vh;
+            overflow-y: auto;
+            padding-right: 10px;
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+
+        .scene-content p {
+            text-indent: 2em;
+            margin-bottom: 1em;
+        }
+
+        .scene-content p:first-child {
+            text-indent: 0;
         }
 
         /* 过渡动画 */
@@ -488,6 +1074,45 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 页面切换动画 */
+        .page-transition {
+            animation: pageTransition 0.5s ease-in-out;
+        }
+
+        @keyframes pageTransition {
+            0% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            50% {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* 滚动条样式 */
+        .dialogue-text::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .dialogue-text::-webkit-scrollbar-track {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+        
+        .dialogue-text::-webkit-scrollbar-thumb {
+            background: var(--secondary-color);
+            border-radius: 3px;
+        }
+        
+        .dialogue-text::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
         }
 
         /* 响应式设计 */
@@ -524,6 +1149,10 @@
     <div class="container">
         <!-- 首页 -->
         <div class="home-page fade-in">
+            <div class="decorative-element top-left"></div>
+            <div class="decorative-element top-right"></div>
+            <div class="decorative-element bottom-left"></div>
+            <div class="decorative-element bottom-right"></div>
             <h1 class="title">窃云台</h1>
             <button class="btn" onclick="showCharacterPage()">选择角色</button>
         </div>
@@ -570,9 +1199,12 @@
                     朱懿珩是先帝最宠爱的"圣孙"，但父亲厌弃他，宠妾灭妻。母妃谢京妤在屈辱中生下他，用纸船灯为他"照亮来路"。后父亲妾室（熙元安排的奸细）难产而死，父亲迁怒母妃，殴打朱懿珩。先帝对他失望，外公谢承提议废圣孙。朱懿珩与朱懿安策论比试，朱懿珩文章被替换，落败被废。天瑞二十九年承天门之变，先帝战死，熙元登基。熙元元年，母妃被朱懿安陷害"刺杀熙元"，朱懿珩被迫亲手"杀死"母妃（实则母妃重伤未死）。此后朱懿珩对外宣称母妃已死，将其藏匿在废弃宫院。他与朱懿安被囚南宫，相依为命。朱懿珩对朱懿安恨之入骨，但伪装成依赖他的弟弟。
                 </div>
                 <div class="dialogue-buttons">
-                    <button class="prev-btn" onclick="prevPage()">上一页</button>
-                    <button class="prev-chapter-btn" onclick="prevChapter()">上一章</button>
-                    <button class="continue-btn" onclick="continueStory()">继续</button>
+                    <button class="home-btn" onclick="showHomePage()">返回首页</button>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button class="prev-btn" onclick="prevPage()">上一页</button>
+                        <button class="prev-chapter-btn" onclick="prevChapter()">上一章</button>
+                        <button class="continue-btn" onclick="continueStory()">继续</button>
+                    </div>
                 </div>
             </div>
             
@@ -630,7 +1262,115 @@
             </div>
         </div>
 
+    <!-- 角色经历卡片模态框 -->
+        <div class="modal" id="experienceModal">
+            <div class="modal-content experience-modal">
+                <div class="modal-header">
+                    <h3 class="modal-title">经历</h3>
+                    <button class="close-btn close-experience" onclick="closeExperienceModal()">×</button>
+                </div>
+                <div class="experience-content" id="experienceContent">
+                    <!-- 经历卡片将通过JS动态生成 -->
+                </div>
+            </div>
+        </div>
+
+    <!-- 详细场景模态框 -->
+        <div class="modal" id="sceneModal">
+            <div class="modal-content scene-modal">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="sceneTitle">详细场景</h3>
+                    <button class="close-btn close-scene" onclick="closeSceneModal()">×</button>
+                </div>
+                <div class="scene-content" id="sceneContent">
+                    <!-- 详细场景内容将通过JS动态生成 -->
+                </div>
+            </div>
+        </div>
+
     <script>
+        // 角色经历数据
+        const characterExperiences = {
+            "怀宁": [
+                { chapter: 1, title: "初次相遇", description: "怀宁公主挺身而出，为朱懿珩挡下太监的欺辱", content: "朱懿珩在御湖边被太监拦住，逼他跪下吃污秽之物。厮打间，怀宁公主从草丛中走出，挡在他身前说：'我跪我跪，我替他跪。'她笑着要吃那些污秽食物，朱懿珩怒意爆发，喝退了太监。他解下钱袋给她，怀宁却对钱袋上的金线更感兴趣，攀上他的胳膊：'景王哥哥好，我是你的妹妹……'" },
+                { chapter: 2, title: "生辰之约", description: "怀宁在朱懿珩生辰时出现，与他共度生辰", content: "怀宁在朱懿珩生辰时出现，吃了他的长寿面，赖在院中不走。三更时她突然坦白：'我不是你妹妹，真怀宁公主被虐待死了，我是教坊司的童妓，被抓来冒充的。'她准备落荒而逃，朱懿珩平静地唤住她：'那很好啊。'他告诉她，真怀宁很惨，你不是她，证明你没有受过那样的虐待。" },
+                { chapter: 3, title: "夜明珠之约", description: "朱懿珩为怀宁砸碎太极殿穹顶的波斯琉璃", content: "怀宁试探朱懿珩，说不要夜明珠，要天上的星星。朱懿珩当晚折返紫禁城，砸碎太极殿穹顶的波斯琉璃——那是抵得上半座皇城的国宝。他主动跪在殿前求最重的刑罚，被当众掌捆至嘴近溃烂，被拖着带走。他将碎琉璃嵌在怀宁寝殿屋顶，月色之下，琉璃细碎的光影倾泻下来，将她寂静的深宫照得如梦似幻。" },
+                { chapter: 4, title: "献俘礼风波", description: "怀宁参与献俘礼，揭露阉党罪行", content: "教坊司女子们以舞为名，当众揭发阉党罪行。她们自揭伤疤，露出烙铁与鞭痕，指着朝中官员说出他们府邸布局、书房藏品，证据确凿。被点名的官员纷纷认罪，却异口同声说与九千岁无关。熙元将事交给九千岁全权处理。教坊司女子们冲上前拦住圣驾，九千岁挥手：'阻拦圣驾，意欲行刺，金吾卫——将扰乱国典的，连同那些没了舌头的，一齐杀了。'" },
+                { chapter: 5, title: "真相大白", description: "怀宁告诉朱懿珩母妃真正的死因", content: "朱懿珩读完承天门之变卷宗，怀宁跌跌撞撞跑来。她刚知道母妃真正的死因，不是来要承诺，而是来告诉他真相。她带着朱懿珩走向那座偏僻院落，院门打开，里面是黑漆棺椁，棺头刻着'谢氏京妤'。那些百合、窗花、纸船——百合是祭奠，窗花是纸钱，纸船里写满往生咒。" },
+                { chapter: 6, title: "生死与共", description: "怀宁抱着九千岁的尸体要离开，被沈乔拦住", content: "九千岁赴约，被杀。怀宁抱着九千岁的尸体要离开，沈乔（阿兰珠）拦住她。怀宁匕首刺向沈乔，谢雨山挡刀受伤。苏月白长剑出鞘，朱懿珩徒手握刃，鲜血滴落：'我在，你们绝对，杀不了她。'他夺过长剑插在地上，带怀宁离开。" },
+                { chapter: 7, title: "坚定信念", description: "怀宁支持朱懿珩的决定", content: "苏月白与朱懿珩决裂后，怀宁坚定地站在朱懿珩身边，支持他的决定。她知道朱懿珩的痛苦和挣扎，却依然选择相信他，陪伴他走过最艰难的时刻。" },
+                { chapter: 8, title: "漠北和亲", description: "熙元用怀宁威胁朱懿珩，要她和亲漠北世子", content: "朱懿珩率豢养多年的亲兵造反，攻城略地，不抢民不杀人，只劫官府。朝廷节节败退。熙元用怀宁威胁他：若不投降，就让怀宁和亲漠北世子。朱懿珩为救怀宁，放弃造反良机，单骑冲入京郊行宫。他看到怀宁穿着猩红嫁衣，漠北世子让她跳舞取乐。" },
+                { chapter: 9, title: "皇后册封", description: "朱懿珩登基，立怀宁为后", content: "朱懿珩登基，立怀宁为后。他册封怀宁为后：'咨尔沈氏，秉德柔嘉，克娴内则。今以金册金宝，立尔为皇后。正位中宫，母仪天下，共承宗庙之重，同固山河之基。'山呼'皇后殿下千岁'的声浪里，他终于实现了'一生一世守护她'的诺言。" },
+                { chapter: 10, title: "最终归宿", description: "怀宁与朱懿珩并肩立于紫禁之巅", content: "朱懿珩立于九重宫阙，身着玄黑冕服，十二流白玉珠垂落眼前。怀宁与他并肩而立，两人俯瞰着脚下的万里山河。从今往后，他们将共同治理这个国家，度过余生。怀宁是他的妻子、皇后、灵魂伴侣，是他生命中最重要的人。" }
+            ],
+            "阿兰珠": [
+                { chapter: 6, title: "初次见面", description: "阿兰珠（沈乔）拦住怀宁，与她发生冲突", content: "九千岁被杀后，怀宁抱着他的尸体要离开，沈乔（阿兰珠）拦住她。怀宁匕首刺向沈乔，谢雨山挡刀受伤。苏月白长剑出鞘，朱懿珩徒手握刃，鲜血滴落：'我在，你们绝对，杀不了她。'他夺过长剑插在地上，带怀宁离开。" },
+                { chapter: 7, title: "矛盾升级", description: "阿兰珠与怀宁的矛盾进一步升级", content: "阿兰珠与怀宁的矛盾日益加剧，两人之间的冲突不断升级。阿兰珠对怀宁的存在感到威胁，而怀宁也对阿兰珠的行为感到不满。" },
+                { chapter: 8, title: "通敌揭露", description: "朱懿珩揭露阿兰珠通敌", content: "朱懿珩大闹祭日，献沈大的人头，揭露阿兰珠通敌的罪行。阿兰珠的真实身份和目的被曝光，她与朱懿珩之间的关系彻底破裂。" },
+                { chapter: 9, title: "最终对决", description: "阿兰珠与朱懿珩的最终对决", content: "朱懿珩与阿兰珠展开最终对决。在漠北决战中，阿兰珠站在朱懿珩的对立面，两人之间的恩怨情仇达到了顶点。" },
+                { chapter: 10, title: "结局", description: "阿兰珠的最终结局", content: "阿兰珠的最终结局。经过一系列的冲突和对决，阿兰珠的命运最终尘埃落定。" }
+            ],
+            "谢雨山": [
+                { chapter: 2, title: "表姐相认", description: "谢雨山与朱懿珩相认", content: "谢雨山与朱懿珩相认，两人成为表面亲近的表姐弟。谢雨山作为谢家的后人，与朱懿珩之间有着复杂的家族关系。" },
+                { chapter: 3, title: "表面亲近", description: "谢雨山与朱懿珩保持表面亲近", content: "谢雨山与朱懿珩保持表面亲近，两人之间的关系看似融洽，但实际上各自有着自己的盘算。" },
+                { chapter: 4, title: "献俘礼", description: "谢雨山参与献俘礼", content: "谢雨山参与献俘礼，见证了教坊司女子们揭露阉党罪行的过程。她在这场事件中扮演了重要的角色。" },
+                { chapter: 5, title: "立场", description: "谢雨山表明自己的立场", content: "谢雨山在承天门之变真相浮出水面后，表明了自己的立场。她选择站在正义的一方，支持朱懿珩揭露真相。" },
+                { chapter: 6, title: "挡刀", description: "谢雨山为阿兰珠挡刀受伤", content: "怀宁匕首刺向阿兰珠时，谢雨山挡刀受伤。她的这一行为显示了她对阿兰珠的保护和关心。" },
+                { chapter: 7, title: "利用", description: "朱懿珩利用谢雨山", content: "朱懿珩利用谢雨山的身份和影响力，为自己的计划服务。谢雨山虽然知道自己被利用，但仍然选择帮助朱懿珩。" },
+                { chapter: 8, title: "质问", description: "朱懿珩质问谢雨山为何区别对待", content: "朱懿珩质问谢雨山为何区别对待怀宁和阿兰珠。他对谢雨山的行为感到不满，认为她应该更加公正。" },
+                { chapter: 9, title: "首辅", description: "朱懿珩擢谢雨山为内阁首辅", content: "朱懿珩登基后，擢谢雨山为内阁首辅。他说：'女子执掌相位，古制所无。然，天下断定，百废待兴，惟此忠烈之后，宰辅之才，方能担此乾坤。'" },
+                { chapter: 10, title: "辅政", description: "谢雨山辅助朱懿珩治理国家", content: "谢雨山作为内阁首辅，辅助朱懿珩治理国家。她发挥自己的才能，为国家的繁荣稳定做出了重要贡献。" }
+            ],
+            "朱懿安": [
+                { chapter: 1, title: "兄弟初隙", description: "朱懿安陷害朱懿珩，导致其被废", content: "朱懿安陷害朱懿珩，导致其被废。在策论比试中，朱懿珩的文章被替换，落败被废。这是兄弟俩之间矛盾的开始。" },
+                { chapter: 2, title: "表面兄弟", description: "朱懿安与朱懿珩保持表面兄弟关系", content: "朱懿安与朱懿珩保持表面兄弟关系，两人在南宫相依为命。朱懿珩伪装成依赖他的弟弟，而朱懿安则表面上照顾他。" },
+                { chapter: 3, title: "伪装", description: "朱懿珩继续伪装对朱懿安的态度", content: "朱懿珩继续伪装对朱懿安的态度，表现出依赖和信任，实际上却对他恨之入骨。他在等待时机，准备复仇。" },
+                { chapter: 4, title: "杀母仇人", description: "朱懿珩视朱懿安为杀母仇人", content: "朱懿珩视朱懿安为杀母仇人。他知道是朱懿安将刺客血衣扔进母妃的院落，导致母妃被杀。这是他对朱懿安仇恨的根源。" },
+                { chapter: 5, title: "死敌", description: "朱懿安与朱懿珩成为死敌", content: "朱懿安与朱懿珩成为死敌。两人之间的矛盾已经不可调和，彼此都想要对方的性命。" },
+                { chapter: 6, title: "对决", description: "朱懿安与朱懿珩的对决", content: "朱懿安与朱懿珩的对决。在京察前夜，两人之间的冲突达到了顶点。" },
+                { chapter: 7, title: "欲杀之", description: "朱懿珩欲杀朱懿安", content: "朱懿珩欲杀朱懿安。他对朱懿安的仇恨已经无法抑制，想要亲手杀死这个害死母亲的仇人。" },
+                { chapter: 8, title: "死敌", description: "朱懿安与朱懿珩的最终对决", content: "朱懿安与朱懿珩的最终对决。熙元死，朱懿安昭告天下，要在阵前鞭朱懿珩母妃尸骨以振军威。朱懿珩知道这是逼他赴死的阳谋，但他必须去。" },
+                { chapter: 9, title: "兄弟和解", description: "朱懿安败亡，兄弟和解", content: "朱懿安败亡，兄弟和解。朱懿珩在决战中胜利，朱懿安死去。朱懿珩回忆起儿时与朱懿安的温情，最终与他和解。" },
+                { chapter: 10, title: "梦中重逢", description: "朱懿珩在梦中与朱懿安重逢", content: "朱懿珩在梦中与朱懿安重逢。那个他恨了一生的哥哥，在被囚时把所有干净热饭给他吃，把外袍全裹在他身上，若还是冷便将他抱在怀里直到睡着；为他装疯卖傻，为他忍辱下跪，十年相伴。" }
+            ],
+            "苏月白": [
+                { chapter: 1, title: "未正式拜师", description: "苏月白与朱懿珩尚未正式拜师", content: "苏月白与朱懿珩尚未正式拜师，但两人之间已经有了师徒般的情谊。苏月白对朱懿珩的才华和遭遇感到同情。" },
+                { chapter: 2, title: "拜师", description: "苏月白收朱懿珩为徒", content: "宫中时疫暴发，朱懿珩染病无人救治，苏月白闯入南宫将他抱起，在御道上纵马疾驰到太医院，拔刀削掉推诿太医的耳朵：'本阁再说一次，救人。'三日后朱懿珩病愈，苏月白因擅闯御道被赐廷杖，肉绽骨折，却每次朝朱懿珩笑了笑。刑毕，朱懿珩背起他。苏月白趴在他瘦削的背上说：'这紫禁城活像座吃人的棺材。殿下自幼长在这样的地方，应该很孤独吧？'他告诉朱懿珩，当年朱懿珩被封圣孙同日，苏家被阉党灭门，因先帝大赦才免于'谋逆'污名。'臣这一生，本就是为了殿下而来。'苏月白请求为师，'往后，长路漫漫，风雨兼程，准臣作陪。'朱懿珩含泪拜师。" },
+                { chapter: 3, title: "亦师亦父", description: "苏月白与朱懿珩建立亦师亦父的关系", content: "苏月白与朱懿珩建立亦师亦父的关系。他不仅教导朱懿珩知识，还关心他的生活和情感，成为他精神上的支柱之一。" },
+                { chapter: 4, title: "倾向朱懿安", description: "朱懿珩发现苏月白更倾向朱懿安", content: "朱懿珩发现苏月白更倾向朱懿安。他感到失望，认为苏月白没有站在自己这边。" },
+                { chapter: 5, title: "失望", description: "朱懿珩对苏月白感到失望", content: "朱懿珩对苏月白感到失望。他觉得苏月白没有理解自己的痛苦和仇恨，没有支持自己的复仇计划。" },
+                { chapter: 6, title: "矛盾", description: "苏月白与朱懿珩的矛盾加剧", content: "苏月白与朱懿珩的矛盾加剧。两人在对待九千岁的问题上产生了分歧，苏月白不认同朱懿珩的做法。" },
+                { chapter: 7, title: "决裂", description: "苏月白与朱懿珩决裂", content: "苏月白献出两座边城给漠北，换回熙元通敌手书，以此扳倒熙元。他甘当'卖国贼'，将被千刀万剐。朱懿珩劫法场救下他，跪在他轿前，额头磕在轿辕上，血流如注：'老师，求您别去……我不能眼睁睁看着您去送死。'他将所有秘密和盘托出：'我愿意去坐上那个罪恶的皇位，替您想保护的人沉冤昭雪……为了老师，我可以不再懦弱，不再卑微。这天下既然不是他想要的样子，我便愿意为了他，换个天下。'他从怀中取出那幅江南春景图——老师画半幅，他补半幅，是'不离不弃'的约定。苏月白却将画从中间生生撕裂，'嘶——'画纸碎片如雪花散落。他冷声道：'本阁警告景王殿下，本阁教你的，是向善，是民为贵，若你连这些也忘了，若你再将造反挂在嘴边——那你便不再是我的学生。'他拿出戒尺让朱懿珩跪下受罚，一下下打在手心。朱懿珩跪着，泪水在眼眶中打转，倔强地不肯落下。苏月白收起戒尺决绝离去。" },
+                { chapter: 8, title: "已决裂", description: "苏月白与朱懿珩彻底决裂", content: "苏月白与朱懿珩彻底决裂。苏月白选择了朱懿安，而朱懿珩则坚持自己的复仇计划。两人之间的师徒情谊已经荡然无存。" },
+                { chapter: 9, title: "师徒情深", description: "苏月白去世，朱懿珩为其沉冤昭雪", content: "苏月白去世，朱懿珩为其沉冤昭雪。他写下遗诏封于金匮：待他身死，新帝第一道旨意便是为苏月白沉冤昭雪，'著书立传，让其洗去逆贼污名，名垂青史，从此得享千秋尊荣，堪配大明百年，第一文臣。'他说：'师命不可违，但此乃后世子孙所做之事，老师可不可以不要怪阿珩？'" },
+                { chapter: 10, title: "留画与信", description: "苏月白留下画与信给朱懿珩", content: "苏月白留下画与信给朱懿珩。画卷背面有苏月白的墨迹：'阿珩：为师今生待你有愧。当年撕画，是怕误你……若再来一次，若我知道那样做会令你如此质疑我的爱。那我愿一千次，一万次，回到那日你等我的地方，一千次，一万次地，同你确认——朱懿珩，是苏月白愿意越过一切保护之人。生生世世，绝不更易。阿珩，老师走了。老师，再也不会伤你的心了。画，我修好了。只是这一次，不知道我的阿珩还愿不愿，肯不肯，再收下它？'" }
+            ],
+            "母妃": [
+                { chapter: 1, title: "精神支柱", description: "母妃是朱懿珩的精神支柱", content: "母妃谢京妤是朱懿珩的精神支柱。她在屈辱中生下朱懿珩，用纸船灯为他'照亮来路'。她为朱懿珩挡下所有严寒，是他最亲近的人。" },
+                { chapter: 2, title: "暗中支持", description: "母妃在暗中支持朱懿珩", content: "母妃在暗中支持朱懿珩。虽然她已经去世，但她的精神仍然激励着朱懿珩，成为他前进的动力。" },
+                { chapter: 3, title: "幻觉", description: "朱懿珩产生母妃还活着的幻觉", content: "朱懿珩产生母妃还活着的幻觉。他手捧新鲜百合推开偏僻院门，对着卧榻上的母妃说话。母妃问他功课、哥哥可好、老师可好、怀宁是哪家的小菩萨。他将怀宁的剪影给她看，母妃说：'小菩萨，专渡你这小孽障。'还将剩下的夜明珠都给他，让他给宁宁制整套钗环。" },
+                { chapter: 4, title: "精神支柱", description: "母妃仍然是朱懿珩的精神支柱", content: "母妃仍然是朱懿珩的精神支柱。即使她已经去世，朱懿珩仍然将她作为自己的精神寄托，在困难时想起她的鼓励。" },
+                { chapter: 5, title: "真相", description: "朱懿珩得知母妃真正的死因", content: "朱懿珩得知母妃真正的死因。十五年前，圣孙党行刺失败，朱懿安将血衣扔进母妃院落。母妃没有哭闹，主动认罪。她提前唤朱懿珩为她梳好鬓角，将匕首塞进他手中，握着他的手直直插进自己胸膛，然后满眼血红地怒吼：'不孝子，你竟为了那个狗皇帝，大义灭亲，杀自己的母亲！'——她在用命换他活。她在袖中轻轻捏他的手，提醒他记住约定。朱懿珩强忍心痛，咬牙切齿地咒骂着世上最爱他的人，母妃却终于笑了。'她再次轻轻捏了捏你。你趁锦衣卫不注意，悄悄低头靠在她唇边，听着这世间最让人肝肠寸断却能圆满一生的告別——'谁说我儿没有帝王之威……''我儿，什么都是，最好的……'" },
+                { chapter: 6, title: "精神支柱", description: "母妃仍然是朱懿珩的精神支柱", content: "母妃仍然是朱懿珩的精神支柱。即使知道了母妃的真正死因，朱懿珩仍然将她作为自己的精神寄托，在困难时想起她的鼓励。" },
+                { chapter: 7, title: "精神支柱", description: "母妃仍然是朱懿珩的精神支柱", content: "母妃仍然是朱懿珩的精神支柱。在与苏月白决裂后，朱懿珩更加思念母妃，将她作为自己的精神寄托。" },
+                { chapter: 8, title: "精神支柱", description: "母妃仍然是朱懿珩的精神支柱", content: "母妃仍然是朱懿珩的精神支柱。在与朱懿安的最终对决中，朱懿珩想起母妃的鼓励，坚定了自己的信念。" },
+                { chapter: 9, title: "追尊", description: "朱懿珩追尊母妃为昭德皇太后", content: "朱懿珩登基后，追尊母妃为昭德皇太后，以开国以来最隆国礼葬入帝陵，'天下臣民，同服缟素三日，九州同悲，共悼吾母贤德。'" },
+                { chapter: 10, title: "精神支柱", description: "母妃仍然是朱懿珩的精神支柱", content: "母妃仍然是朱懿珩的精神支柱。即使已经追尊母妃为皇太后，朱懿珩仍然将她作为自己的精神寄托，在治理国家时想起她的教导。" }
+            ],
+            "九千岁": [
+                { chapter: 1, title: "仇人", description: "九千岁是朱懿珩的仇人", content: "九千岁是朱懿珩的仇人。他扶持熙元登基，参与了承天门之变，是朱懿珩家破人亡的罪魁祸首之一。" },
+                { chapter: 2, title: "互相利用", description: "朱懿珩与九千岁互相利用", content: "朱懿珩故意设计被太监欺辱，逃到九千岁面前跪了一夜，放下尊严开口唤'干爹'。九千岁轻蔑地默许。只有朱懿珩知道，那从不是意外——他需要这个靠山。后来九千岁单独召见他，让他跪下，捏住他的下巴说：'果然是，同类。'九千岁取出龙袍让他换上，问他感觉怎么样。朱懿珩答：'回干爹，感觉，好极了。'九千岁看穿他的伪装：'你的野心在眼里看不见，却全都藏在这儿了……能忍常人所不能忍——朱懿珩，告诉我，你恨谁？'朱懿珩收起恭顺：'你这间屋子太小了，装不下我所有恨的人。恨我的父亲、翁翁、外公、朱懿安、熙元……还有你。'九千岁不怒反笑，提出合作：他帮朱懿珩夺皇位，条件是保护好怀宁。朱懿珩应下，心中却冷笑。" },
+                { chapter: 3, title: "被迫合作", description: "朱懿珩与九千岁被迫合作", content: "朱懿珩与九千岁被迫合作。虽然彼此都知道对方的真实意图，但为了各自的利益，他们不得不暂时联手。" },
+                { chapter: 4, title: "互相利用", description: "朱懿珩与九千岁继续互相利用", content: "朱懿珩与九千岁继续互相利用。九千岁威胁朱懿珩杀人灭口，否则将他的谋反证据公之于众。朱懿珩无奈，只将证人割舌，未杀性命。" },
+                { chapter: 5, title: "亦敌亦父", description: "九千岁对朱懿珩产生了父子之情", content: "九千岁在深夜找到朱懿珩。他告诉朱懿珩，他早就知道朱懿珩在利用他、恨他，也知道所有苦肉计。'我本以为，像我这样的人，什么都不会在意了。可连我自己都没想到，我原来也很在意你。我好像，也把你当成真正的孩子了。'他曾看见十岁的朱懿珩捧着点心站在谢承书房外，里面谢承握着朱懿安的手教写字，九十五张宣纸、整整一锭墨，却对门外连眼神都不肯给。'后来，你的外公的爱马死了，你又偷偷跑回谢家，还特意带了先帝赐你的洮河古砚……雨都把你淋透了，你声音都哑了，你还在说'外公不要难过'。'可谢承连门都不愿打开，说'君臣有别'，'不要再来谢家'。朱懿珩取出当年被调换的策论，小心翼翼地问九千岁：'写得好吗？'九千岁看后仰头大笑：'果然！老夫是替陛下主持过殿试，批过状元郎的卷子，驳过内阁首辅的，小子的策论比他们都强！'他将策论小心收进袖子。朱懿珩恍惚觉得，'命运用最荒诞的方式给了你温暖。那些血浓于水的至亲将你视作污点，而这个本该厌恶的阉人，却将你视如珍宝。'" },
+                { chapter: 6, title: "已死", description: "九千岁被杀，朱懿珩内心愧疚", content: "九千岁赴约，被杀。在他倒下的刹那，朱懿珩从他怀中摸出一本用厚油纸包裹的小册子。日记中记载：九千岁曾替他前往西南镇压流民叛乱，替他顶罪受酷刑，被铁链悬吊，鞭子抽得血肉模糊，却对熙元说'是老奴……与景王殿下无关'。献俘礼前，九千岁洞察熙元杀心，故意用叛乱证据逼朱懿珩杀人灭口，只为向熙元证明他是听话的棋子。此后他在日记中满纸泪痕：'我有悔……他是天潢贵胄，金枝玉叶，是他看中的大明未来的明君圣主。他不该让他成为杀人不眨眼的屠夫。'日记中还散落一张书局契约：九千岁出资万两刊印朱懿珩策论十万份，贴满京城。为了签下契约，他乔装成百姓去书局，被掌柜骂'老腌臜'，他弯下腰，跪下，'布衣之下，他的膝盖沉重地落在地面上……那双曾执掌生杀的手，此刻稳稳地、再次将那卷承载着你全部心血的策论，高举过头。'他说：'印，十万份。贴满京城……让所有人都看见，看见我儿写的……这安邦定国的良策。'" },
+                { chapter: 7, title: "愧疚", description: "朱懿珩对九千岁的死感到愧疚", content: "朱懿珩对九千岁的死感到愧疚。他想起九千岁对他的好，想起他为自己做的一切，心中充满了愧疚和悔恨。" },
+                { chapter: 8, title: "愧疚", description: "朱懿珩对九千岁的死感到愧疚", content: "朱懿珩对九千岁的死感到愧疚。在与朱懿安的最终对决中，他想起九千岁的话，心中的愧疚更加深刻。" },
+                { chapter: 9, title: "愧疚与感激", description: "朱懿珩对九千岁既有愧疚又有感激", content: "朱懿珩对九千岁既有愧疚又有感激。他感激九千岁对他的照顾和支持，同时也对他的死感到愧疚。" },
+                { chapter: 10, title: "义父", description: "朱懿珩视九千岁为义父", content: "朱懿珩视九千岁为义父。他在心中承认了九千岁对他的父子之情，将他作为自己的亲人。" }
+            ]
+        };
+
         // 故事数据 - 完全按照用户提供的内容复制
         const storyData = {
             chapters: [
@@ -638,10 +1378,12 @@
                     title: "第一幕：朱楼宴雪",
                     year: "天瑞年间 - 熙元二年",
                     bonds: {
-                        "朱懿安": { relation: "哥哥，表面依赖，实则恨之入骨", affinity: -8 },
                         "怀宁": { relation: "未相识", affinity: 0 },
-                        "苏月白": { relation: "未正式拜师", affinity: 0 },
+                        "阿兰珠": { relation: "未相识", affinity: 0 },
                         "谢雨山": { relation: "未正式相认", affinity: 0 },
+                        "朱懿安": { relation: "哥哥，表面依赖，实则恨之入骨", affinity: -7 },
+                        "苏月白": { relation: "未正式拜师", affinity: 0 },
+                        "母妃": { relation: "精神支柱", affinity: 10 },
                         "九千岁": { relation: "仇人，但将利用", affinity: -5 }
                     },
                     scenes: [
@@ -656,9 +1398,11 @@
                     year: "熙元三年 - 五年",
                     bonds: {
                         "怀宁": { relation: "爱慕对象，想保护她", affinity: 7 },
-                        "苏月白": { relation: "恩师，精神支柱之一", affinity: 6 },
-                        "朱懿安": { relation: "表面兄弟，实则仇人", affinity: -7 },
+                        "阿兰珠": { relation: "未相识", affinity: 0 },
                         "谢雨山": { relation: "表姐，表面亲近", affinity: 1 },
+                        "朱懿安": { relation: "表面兄弟，实则仇人", affinity: -7 },
+                        "苏月白": { relation: "恩师，精神支柱之一", affinity: 6 },
+                        "母妃": { relation: "精神支柱", affinity: 10 },
                         "九千岁": { relation: "干爹，利用工具", affinity: -4 }
                     },
                     scenes: [
@@ -673,8 +1417,11 @@
                     year: "熙元六年 - 十年",
                     bonds: {
                         "怀宁": { relation: "恋人，知晓其真实身份", affinity: 9 },
+                        "阿兰珠": { relation: "未相识", affinity: 0 },
+                        "谢雨山": { relation: "表姐，表面亲近", affinity: 1 },
+                        "朱懿安": { relation: "继续伪装", affinity: -7 },
                         "苏月白": { relation: "亦师亦父", affinity: 8 },
-                        "朱懿安": { relation: "继续伪装", affinity: -6 },
+                        "母妃": { relation: "精神支柱", affinity: 10 },
                         "九千岁": { relation: "被迫合作", affinity: -3 }
                     },
                     scenes: [
@@ -689,8 +1436,11 @@
                     year: "熙元十一年 - 十五年",
                     bonds: {
                         "怀宁": { relation: "唯一精神支柱", affinity: 10 },
-                        "苏月白": { relation: "恩师，但发现其更倾向朱懿安", affinity: 7 },
+                        "阿兰珠": { relation: "未相识", affinity: 0 },
+                        "谢雨山": { relation: "表姐，表面亲近", affinity: 1 },
                         "朱懿安": { relation: "杀母仇人，欲杀之", affinity: -9 },
+                        "苏月白": { relation: "恩师，但发现其更倾向朱懿安", affinity: 7 },
+                        "母妃": { relation: "精神支柱", affinity: 10 },
                         "九千岁": { relation: "互相利用", affinity: -2 }
                     },
                     scenes: [
@@ -705,9 +1455,12 @@
                     year: "熙元十五年末 - 十六年初",
                     bonds: {
                         "怀宁": { relation: "唯一信任", affinity: 10 },
-                        "九千岁": { relation: "亦敌亦父", affinity: 1 },
-                        "苏月白": { relation: "恩师但失望", affinity: 6 },
-                        "朱懿安": { relation: "死敌", affinity: -10 }
+                        "阿兰珠": { relation: "未相识", affinity: 0 },
+                        "谢雨山": { relation: "表姐，表面亲近", affinity: 1 },
+                        "朱懿安": { relation: "死敌", affinity: -9 },
+                        "苏月白": { relation: "恩师但失望", affinity: 7 },
+                        "母妃": { relation: "精神支柱", affinity: 10 },
+                        "九千岁": { relation: "亦敌亦父", affinity: 1 }
                     },
                     scenes: [
                         {
@@ -721,9 +1474,12 @@
                     year: "熙元十六年春",
                     bonds: {
                         "怀宁": { relation: "生死与共", affinity: 10 },
-                        "九千岁": { relation: "已死，朱懿珩内心愧疚", affinity: 3 },
+                        "阿兰珠": { relation: "未相识", affinity: -3 },
+                        "谢雨山": { relation: "表姐，表面亲近", affinity: 0 },
+                        "朱懿安": { relation: "死敌", affinity: -10 },
                         "苏月白": { relation: "恩师但失望", affinity: 5 },
-                        "朱懿安": { relation: "死敌", affinity: -10 }
+                        "母妃": { relation: "精神支柱", affinity: 10 },
+                        "九千岁": { relation: "已死，朱懿珩内心愧疚", affinity: 3 }
                     },
                     scenes: [
                         {
@@ -737,9 +1493,12 @@
                     year: "熙元十六年春 - 夏",
                     bonds: {
                         "怀宁": { relation: "唯一", affinity: 10 },
-                        "苏月白": { relation: "决裂，但朱懿珩仍想挽留", affinity: 2 },
+                        "阿兰珠": { relation: "未相识", affinity: -3 },
+                        "谢雨山": { relation: "利用", affinity: 0 },
                         "朱懿安": { relation: "欲杀之", affinity: -10 },
-                        "谢雨山": { relation: "利用", affinity: -3 }
+                        "苏月白": { relation: "决裂，但朱懿珩仍想挽留", affinity: 2 },
+                        "母妃": { relation: "精神支柱", affinity: 10 },
+                        "九千岁": { relation: "已死，朱懿珩内心愧疚", affinity: 3 }
                     },
                     scenes: [
                         {
@@ -753,8 +1512,12 @@
                     year: "熙元十六年夏 - 秋",
                     bonds: {
                         "怀宁": { relation: "生死相随", affinity: 10 },
-                        "苏月白": { relation: "已决裂", affinity: 1 },
-                        "朱懿安": { relation: "死敌", affinity: -10 }
+                        "阿兰珠": { relation: "未相识", affinity: -5 },
+                        "谢雨山": { relation: "利用", affinity: 0 },
+                        "朱懿安": { relation: "死敌", affinity: -10 },
+                        "苏月白": { relation: "已决裂", affinity: 2 },
+                        "母妃": { relation: "精神支柱", affinity: 10 },
+                        "九千岁": { relation: "已死，朱懿珩内心愧疚", affinity: 3 }
                     },
                     scenes: [
                         {
@@ -768,9 +1531,12 @@
                     year: "熙元十六年秋 - 冬",
                     bonds: {
                         "怀宁": { relation: "皇后", affinity: 10 },
+                        "阿兰珠": { relation: "未相识", affinity: -5 },
+                        "谢雨山": { relation: "表姐+首辅", affinity: 3 },
                         "朱懿安": { relation: "已死，兄弟和解", affinity: 2 },
-                        "苏月白": { relation: "已死，师徒情深", affinity: 6 },
-                        "谢雨山": { relation: "表姐+首辅", affinity: 3 }
+                        "苏月白": { relation: "已死，师徒情深", affinity: 7 },
+                        "母妃": { relation: "精神支柱", affinity: 10 },
+                        "九千岁": { relation: "已死，朱懿珩内心愧疚", affinity: 4 }
                     },
                     scenes: [
                         {
@@ -784,9 +1550,11 @@
                     year: "熙元十六年冬以后",
                     bonds: {
                         "怀宁": { relation: "妻子、皇后、灵魂伴侣", affinity: 10 },
-                        "苏月白": { relation: "恩师，已逝，留画与信", affinity: 7 },
-                        "朱懿安": { relation: "兄长，已逝，梦中和解", affinity: 4 },
+                        "阿兰珠": { relation: "未相识", affinity: -5 },
                         "谢雨山": { relation: "表姐+内阁首辅", affinity: 3 },
+                        "朱懿安": { relation: "兄长，已逝，梦中和解", affinity: 3 },
+                        "苏月白": { relation: "恩师，已逝，留画与信", affinity: 7 },
+                        "母妃": { relation: "精神支柱", affinity: 10 },
                         "九千岁": { relation: "义父，已逝，愧疚与感激", affinity: 5 }
                     },
                     scenes: [
@@ -814,6 +1582,7 @@
 
         function showHomePage() {
             document.querySelector('.character-page').style.display = 'none';
+            document.querySelector('.story-page').style.display = 'none';
             document.querySelector('.home-page').style.display = 'block';
             document.querySelector('.home-page').classList.add('fade-in');
         }
@@ -963,7 +1732,7 @@
                 const affinityPercent = Math.abs(info.affinity) * 10; // 好感度绝对值乘以10，确保10分占满进度条
                 const affinityClass = info.affinity >= 0 ? 'positive' : 'negative';
                 bondHTML += `
-                    <div class="bond-item">
+                    <div class="bond-item" onclick="showExperienceModal('${name}')">
                         <div class="bond-header">
                             <div class="bond-name">${name}</div>
                             <div class="affinity-container">
@@ -1091,11 +1860,11 @@
 
         // 章节跳转
         function showJumpModal() {
-            document.getElementById('jumpModal').style.display = 'flex';
+            document.getElementById('jumpModal').classList.add('show');
         }
 
         function closeJumpModal() {
-            document.getElementById('jumpModal').style.display = 'none';
+            document.getElementById('jumpModal').classList.remove('show');
         }
 
         function jumpToChapter(chapterIndex) {
@@ -1105,12 +1874,68 @@
             closeJumpModal();
         }
 
+        // 显示角色经历模态框
+        function showExperienceModal(character) {
+            const experienceModal = document.getElementById('experienceModal');
+            const experienceContent = document.getElementById('experienceContent');
+            
+            // 获取当前章节
+            const currentChapterNum = currentChapter + 1;
+            
+            // 获取该角色的经历，只显示当前章节及之前的经历
+            const experiences = characterExperiences[character].filter(exp => exp.chapter <= currentChapterNum);
+            
+            // 生成经历卡片
+            let experienceHTML = '';
+            experiences.forEach(exp => {
+                experienceHTML += `
+                    <div class="experience-card" onclick="showSceneModal('${character}', ${exp.chapter})">
+                        <h4>${exp.title}</h4>
+                        <p>${exp.description}</p>
+                        <div class="experience-chapter">第${exp.chapter}幕</div>
+                    </div>
+                `;
+            });
+            
+            experienceContent.innerHTML = experienceHTML;
+            experienceModal.classList.add('show');
+        }
+
+        // 关闭经历模态框
+        function closeExperienceModal() {
+            document.getElementById('experienceModal').classList.remove('show');
+        }
+
+        // 显示详细场景模态框
+        function showSceneModal(character, chapter) {
+            const sceneModal = document.getElementById('sceneModal');
+            const sceneTitle = document.getElementById('sceneTitle');
+            const sceneContent = document.getElementById('sceneContent');
+            
+            // 获取该角色在指定章节的经历
+            const experience = characterExperiences[character].find(exp => exp.chapter === chapter);
+            
+            if (experience) {
+                sceneTitle.textContent = experience.title;
+                sceneContent.innerHTML = `<p>${experience.content}</p>`;
+                sceneModal.classList.add('show');
+            }
+        }
+
+        // 关闭详细场景模态框
+        function closeSceneModal() {
+            document.getElementById('sceneModal').classList.remove('show');
+        }
+
         // 点击模态框外部关闭
         window.onclick = function(event) {
-            const modal = document.getElementById('jumpModal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
+            const modals = ['jumpModal', 'experienceModal', 'sceneModal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (modal && event.target == modal) {
+                    modal.classList.remove('show');
+                }
+            });
         }
     </script>
 </body>
