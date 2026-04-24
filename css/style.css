@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    line-height: 1.6;
+}
+
+#game-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #4a6fa5;
+    margin-bottom: 30px;
+}
+
+#dialogue-box {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    min-height: 150px;
+}
+
+#character-name {
+    font-weight: bold;
+    color: #4a6fa5;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+#dialogue-text {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+#options-container {
+    margin-top: 20px;
+}
+
+#options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option {
+    background-color: #4a6fa5;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    text-align: left;
+}
+
+.option:hover {
+    background-color: #3a5a85;
+}
+
+@media (max-width: 600px) {
+    #game-container {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 24px;
+    }
+    
+    #dialogue-box {
+        padding: 15px;
+    }
+    
+    .option {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+}
